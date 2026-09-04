@@ -1,0 +1,15 @@
+intent_id: 2026-09-04-ai-native-sdlc-platform
+event: code_owner_approved
+acceptor: Behzad
+date: 2026-09-04
+branch: feat/v1-dogfood-scaffold
+head: 3ff19a6e3c8333705fc908b1060d6956d2092b8f
+commits:
+  - bc764d6 feat: v1 AI-native SDLC platform dogfood scaffold
+  - 67ff639 fix: harden plan-before-edit and production-gate (review Important)
+  - 5c46be5 fix: align build/deploy docs with hardened hooks
+  - 3ff19a6 fix: sync CLAUDE.md gate rules with hardened hooks
+notes: >
+  Local-only dogfood. No GitHub remote. Reviwito findings-only reviews cleared
+  Important items; residual nits waived by code owner accept. Production gate
+  remains a stub (promote.sh + release-managers.txt); not a cloud deploy.
