@@ -69,6 +69,7 @@ ACTIVE_BAK="$(mktemp)"
 cp "$ROOT/.claude/active-intent" "$ACTIVE_BAK"
 rm -f "$ROOT/.claude/active-intent"
 expect_decision "T2 deny missing active-intent" "$PLAN_HOOK" "$FIX/missing-plan-bands-write.json" deny
+expect_decision "MultiEdit deny missing active-intent" "$PLAN_HOOK" "$FIX/multiedit-deny.json" deny
 # attestations path is NOT allowlisted — missing active-intent → deny
 expect_decision "attestations write not allowlisted (no active-intent)" "$PLAN_HOOK" "$FIX/attestations-write.json" deny
 cp "$ACTIVE_BAK" "$ROOT/.claude/active-intent"
