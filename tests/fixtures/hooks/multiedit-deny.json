@@ -1,1 +1,1 @@
-{"tool_name":"MultiEdit","tool_input":{"edits":[{"file_path":"bands.yaml","old_string":"a","new_string":"b"}]}}
+{"tool_name":"MultiEdit","hook_event_name":"PreToolUse","tool_input":{"edits":[{"file_path":"bands.yaml","old_string":"a","new_string":"b"},{"file_path":"CLAUDE.md","old_string":"x","new_string":"y"}]}}

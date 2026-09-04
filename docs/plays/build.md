@@ -7,7 +7,7 @@
 
 1. Set `.claude/active-intent` to the intent-id.
 2. Worker proposes file-level plan + tests; engineer accepts → `status: accepted` on `plan.md`.
-3. `plan-before-edit` PreToolUse hook (matcher `Edit|Write|MultiEdit`) then allows non-allowlisted paths.
+3. `plan-before-edit` PreToolUse hook (matcher `Edit|Write|MultiEdit`) then **may** allow non-allowlisted paths only when `plan.md` is `status: accepted` for `.claude/active-intent`.
 4. Pathless / unresolvable tool input is **denied** (fail-closed). MultiEdit checks every path in `edits[]`.
 
 ## Bootstrap exception

@@ -13,16 +13,19 @@ Repo purpose: **platform contracts + dogfood SoT** for Anthropic’s AI-native S
 | Plays | `docs/plays/{plan,design,build,test,deploy,maintain}.md` |
 | Skills / hooks | `.claude/skills/`, `.claude/hooks/` |
 | Review / bands | `REVIEW.md`, `bands.yaml` |
+| Release managers | `releases/release-managers.txt` |
+| Attestations | `releases/attestations/*.yaml` (write requires accepted plan) |
 
 **Before any product/framework edit:** read intent → spec → plan for `.claude/active-intent`.
 
 ## Gate rules
 
-1. **No Write/Edit** outside the allowlist without `plans/<id>/plan.md` frontmatter `status: accepted` (hook: `plan-before-edit.sh`).
-2. **Allowlist:** `intent/_template.md`, `specs/_template.md`, `docs/**`, `findings/**`, `releases/attestations/**`, `.markdownlint.json`, `.gitignore`, `README.md`.
-3. **Findings never approve PRs.** Human code owner required (`CODEOWNERS`: `@OWNER` placeholder; Behzad for v1).
-4. **Agents stop at the production gate.** Promote needs `releases/attestations/*.yaml` with non-empty `release_manager` (hook: `production-gate.sh`).
-5. If the diff departs from the plan, update `plan.md` in the same commit/PR.
+1. **PreToolUse matcher `Edit|Write|MultiEdit`** (`plan-before-edit.sh`). Pathless / unresolvable tool input is **denied**. MultiEdit checks every path in `edits[]`.
+2. **No edit** outside the allowlist without `plans/<id>/plan.md` frontmatter `status: accepted`.
+3. **Allowlist:** `intent/_template.md`, `specs/_template.md`, `docs/**`, `findings/**`, `.markdownlint.json`, `.gitignore`, `README.md`. **Not allowlisted:** `releases/attestations/**` (writing attestations requires an accepted plan).
+4. **Findings never approve PRs.** Human code owner required (`CODEOWNERS`: `@OWNER` placeholder; Behzad for v1).
+5. **Agents stop at the production gate.** Promote needs `releases/attestations/*.yaml` whose `release_manager` **exactly matches** a non-comment line in `releases/release-managers.txt` (v1: `Behzad`, `@OWNER`). Mere non-empty values (e.g. forged `Eve`) are denied (`production-gate.sh`).
+6. If the diff departs from the plan, update `plan.md` in the same commit/PR.
 
 ## Commands
 
@@ -30,7 +33,7 @@ Repo purpose: **platform contracts + dogfood SoT** for Anthropic’s AI-native S
 bash tests/validate-templates.sh
 bash tests/validate-hooks.sh
 bash scripts/finding-to-intent.sh findings/examples/dogfood-sample.md
-bash scripts/promote.sh   # stub; requires attestation
+bash scripts/promote.sh   # stub; requires allowlisted release_manager attestation
 ```
 
 ## Further reading

@@ -24,5 +24,5 @@ if has_valid_attestation "$root"; then
   exit 0
 fi
 
-hook_deny "prod_gate_blocked: promote-like command requires releases/attestations/*.yaml (or .yml) with non-empty release_manager"
+hook_deny "prod_gate_blocked: promote-like command requires releases/attestations/*.yaml (or .yml) whose release_manager exactly matches releases/release-managers.txt"
 exit 0
