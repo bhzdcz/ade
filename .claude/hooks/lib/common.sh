@@ -13,7 +13,9 @@ hook_allow() {
       }
     }'
   else
-    printf '%s\n' "{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\",\"permissionDecisionReason\":\"${reason}\"}}"
+    local escaped
+    escaped=$(printf '%s' "$reason" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read())[1:-1])')
+    printf '%s\n' "{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\",\"permissionDecisionReason\":\"${escaped}\"}}"
   fi
 }
 
@@ -40,8 +42,27 @@ read_stdin_json() {
 
 extract_file_path() {
   local json="$1"
+  # Prefer first path from multi-path extractor (covers MultiEdit edits[])
+  local first
+  first="$(extract_file_paths "$json" | head -n1 || true)"
+  printf '%s\n' "$first"
+}
+
+extract_file_paths() {
+  local json="$1"
   if command -v jq >/dev/null 2>&1; then
-    echo "$json" | jq -r '.tool_input.file_path // .tool_input.path // .tool_input.filePath // .file_path // empty'
+    echo "$json" | jq -r '
+      [
+        (.tool_input.file_path // empty),
+        (.tool_input.path // empty),
+        (.tool_input.filePath // empty),
+        (.file_path // empty),
+        ((.tool_input.edits // [])[] | (.file_path // .path // empty))
+      ]
+      | map(select(type == "string" and . != ""))
+      | unique
+      | .[]
+    '
   else
     printf '%s' "$json" | python3 -c 'import json,sys
 try:
@@ -49,7 +70,28 @@ try:
 except Exception:
  sys.exit(0)
 ti=d.get("tool_input") or {}
-print(ti.get("file_path") or ti.get("path") or ti.get("filePath") or d.get("file_path") or "")'
+paths=[]
+for k in ("file_path","path","filePath"):
+ v=ti.get(k)
+ if isinstance(v,str) and v:
+  paths.append(v)
+fp=d.get("file_path")
+if isinstance(fp,str) and fp:
+ paths.append(fp)
+for ed in (ti.get("edits") or []):
+ if not isinstance(ed,dict):
+  continue
+ for k in ("file_path","path"):
+  v=ed.get(k)
+  if isinstance(v,str) and v:
+   paths.append(v)
+   break
+seen=set()
+for p in paths:
+ if p not in seen:
+  seen.add(p)
+  print(p)
+'
   fi
 }
 
@@ -128,7 +170,6 @@ is_allowlisted_path() {
     specs/_template.md) return 0 ;;
     docs|docs/*) return 0 ;;
     findings|findings/*) return 0 ;;
-    releases/attestations|releases/attestations/*) return 0 ;;
     .markdownlint.json) return 0 ;;
     .gitignore) return 0 ;;
     README.md) return 0 ;;
@@ -156,6 +197,33 @@ is_promote_command() {
   return 1
 }
 
+# Trim leading/trailing whitespace
+_trim() {
+  local s="$1"
+  s="${s#"${s%%[![:space:]]*}"}"
+  s="${s%"${s##*[![:space:]]}"}"
+  printf '%s' "$s"
+}
+
+is_allowed_release_manager() {
+  local root="$1"
+  local name="$2"
+  local managers="$root/releases/release-managers.txt"
+  if [[ ! -f "$managers" ]] || [[ -z "$name" ]]; then
+    return 1
+  fi
+  local line trimmed
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    trimmed="$(_trim "$line")"
+    [[ -z "$trimmed" ]] && continue
+    [[ "$trimmed" == \#* ]] && continue
+    if [[ "$name" == "$trimmed" ]]; then
+      return 0
+    fi
+  done < "$managers"
+  return 1
+}
+
 has_valid_attestation() {
   local root="$1"
   local dir="$root/releases/attestations"
@@ -167,7 +235,8 @@ has_valid_attestation() {
   for f in "$dir"/*.yaml "$dir"/*.yml; do
     [[ -f "$f" ]] || continue
     val=$(grep -E "^[[:space:]]*release_manager:" "$f" | head -n1 | sed "s/^[[:space:]]*release_manager:[[:space:]]*//;s/[[:space:]]*$//;s/^[\"']//;s/[\"']$//")
-    if [[ -n "$val" ]]; then
+    val="$(_trim "$val")"
+    if is_allowed_release_manager "$root" "$val"; then
       shopt -u nullglob
       return 0
     fi

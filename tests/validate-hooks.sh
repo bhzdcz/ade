@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# T2-T6: dry-run hooks with fixture stdin JSON.
+# T2-T6 + review hardenings: dry-run hooks with fixture stdin JSON.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
@@ -55,11 +55,22 @@ expect_decision "T4 allowlist readme" "$PLAN_HOOK" "$FIX/allowlist-readme-write.
 printf '%s\n' '2026-09-04-ai-native-sdlc-platform' > "$ROOT/.claude/active-intent"
 expect_decision "T3 accepted plan CLAUDE.md" "$PLAN_HOOK" "$FIX/accepted-plan-claude-write.json" allow
 
+# MultiEdit with accepted plan → allow
+expect_decision "MultiEdit accepted plan CLAUDE.md" "$PLAN_HOOK" "$FIX/multiedit-claude.json" allow
+
+# Pathless / unresolvable → deny
+expect_decision "pathless write deny" "$PLAN_HOOK" "$FIX/pathless-write.json" deny
+
+# Writing under releases/attestations/ with accepted plan → allow (NOT allowlisted; plan covers it)
+expect_decision "attestations write with accepted plan" "$PLAN_HOOK" "$FIX/attestations-write.json" allow
+
 # T2 deny without accepted plan: stash active-intent
 ACTIVE_BAK="$(mktemp)"
 cp "$ROOT/.claude/active-intent" "$ACTIVE_BAK"
 rm -f "$ROOT/.claude/active-intent"
 expect_decision "T2 deny missing active-intent" "$PLAN_HOOK" "$FIX/missing-plan-bands-write.json" deny
+# attestations path is NOT allowlisted — missing active-intent → deny
+expect_decision "attestations write not allowlisted (no active-intent)" "$PLAN_HOOK" "$FIX/attestations-write.json" deny
 cp "$ACTIVE_BAK" "$ROOT/.claude/active-intent"
 rm -f "$ACTIVE_BAK"
 
@@ -70,6 +81,7 @@ cp "$PLAN" "$PLAN_BAK"
 # flip status to draft temporarily
 sed -i 's/^status: accepted/status: draft/' "$PLAN"
 expect_decision "T2 deny plan not accepted" "$PLAN_HOOK" "$FIX/missing-plan-bands-write.json" deny
+expect_decision "attestations write deny draft plan" "$PLAN_HOOK" "$FIX/attestations-write.json" deny
 cp "$PLAN_BAK" "$PLAN"
 rm -f "$PLAN_BAK"
 
@@ -96,7 +108,12 @@ shopt -u nullglob
 expect_decision "T5 promote deny no attestation" "$PROD_HOOK" "$FIX/promote-command.json" deny
 expect_decision "T5 promote deny env flag" "$PROD_HOOK" "$FIX/promote-env-flag.json" deny
 
-# T6 allow with attestation
+# Eve forge attestation → promote deny (not on release-managers allowlist)
+cp "$FIX/forge-eve-attestation.yaml" "$ATT_DIR/forge-eve.yaml"
+expect_decision "Eve forge attestation promote deny" "$PROD_HOOK" "$FIX/promote-command.json" deny
+rm -f "$ATT_DIR/forge-eve.yaml"
+
+# T6 allow with attestation (Behzad is on release-managers.txt)
 cp "$FIX/prod-allow-attestation.yaml" "$ATT_DIR/test-attestation.yaml"
 expect_decision "T6 promote allow with attestation" "$PROD_HOOK" "$FIX/promote-command.json" allow
 expect_decision "T6 promote allow env flag" "$PROD_HOOK" "$FIX/promote-env-flag.json" allow

@@ -40,6 +40,8 @@ fi
 
 TITLE="$(grep -E '^# ' "$FINDING" | head -n1 | sed 's/^# //' || true)"
 [[ -z "$TITLE" ]] && TITLE="Finding: $SLUG"
+# YAML-safe frontmatter title (handles quotes/special chars)
+TITLE_YAML="$(python3 -c 'import json,sys; print(json.dumps(sys.argv[1]))' "$TITLE")"
 
 PROBLEM="$(awk '
   /^## Problem/{flag=1; next}
@@ -50,7 +52,7 @@ PROBLEM="$(awk '
 
 cat > "$OUT" <<EOFINTENT
 ---
-title: "$TITLE"
+title: $TITLE_YAML
 author: finding-to-intent.sh
 status: draft
 date: $DATE

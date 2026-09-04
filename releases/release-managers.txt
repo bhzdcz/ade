@@ -1,0 +1,4 @@
+# Allowed release_manager identities for production-gate attestations.
+# Exact trim match against release_manager: in releases/attestations/*.yaml
+Behzad
+@OWNER
