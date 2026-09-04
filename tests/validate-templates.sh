@@ -106,9 +106,13 @@ if [[ "$band_count" -lt 2 ]]; then
   fail=1
 fi
 
-# OWNER/REPO placeholders present, no accidental real invent (soft check)
-if ! grep -q 'OWNER' README.md || ! grep -q 'REPO' README.md; then
-  echo "FAIL README.md missing OWNER/REPO placeholders"
+# Real GitHub identity present (soft check)
+if ! grep -q 'bhzdcz/inkrail' README.md; then
+  echo "FAIL README.md missing bhzdcz/inkrail identity"
+  fail=1
+fi
+if ! grep -q '@bhzdcz' CODEOWNERS; then
+  echo "FAIL CODEOWNERS missing @bhzdcz"
   fail=1
 fi
 

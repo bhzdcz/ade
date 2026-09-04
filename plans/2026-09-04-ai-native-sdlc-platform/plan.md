@@ -14,7 +14,7 @@ date: 2026-09-04
 
 Greenfield **dedicated GitHub repo** that *is* the platform (dogfood). Scaffold the full layout in one implementation pass after this plan is accepted. Worker is **Claude Code CLI/SDK only** — no multi-harness runtime.
 
-**Repo strategy (decision):** Prefer create `OWNER/REPO` on GitHub (name TBD by Behzad), then scaffold the full tree via Cursor cloud agent + `gh` into that empty repo. Until `OWNER/REPO` is named, treat the tree as a local/placeholder scaffold with `OWNER/REPO` literals everywhere identity is needed; first post-create task is rename placeholders + protect default branch. Do **not** start a multi-product monorepo.
+**Repo strategy (decision):** Prefer create `bhzdcz/inkrail` on GitHub (name TBD by Behzad), then scaffold the full tree via Cursor cloud agent + `gh` into that empty repo. Until `bhzdcz/inkrail` is named, treat the tree as a local/placeholder scaffold with `bhzdcz/inkrail` literals everywhere identity is needed; first post-create task is rename placeholders + protect default branch. Do **not** start a multi-product monorepo.
 
 **Bootstrap order after `plan_accepted`:**
 
@@ -34,11 +34,11 @@ Nothing in this plan implements application product code outside the platform co
 
 | Path | Purpose |
 | --- | --- |
-| `README.md` | What this repo is; pointer to `docs/plays/`; placeholders `OWNER/REPO` |
+| `README.md` | What this repo is; pointer to `docs/plays/`; placeholders `bhzdcz/inkrail` |
 | `CLAUDE.md` | ≤1 page: artifact paths, gate rules, read intent→spec→plan before edit, link to plays |
 | `REVIEW.md` | Three passes (bugs, security, compliance vs artifacts); Important vs Nit; skip rules; code-owner rule |
 | `bands.yaml` | Schema + ≥2 example bands |
-| `CODEOWNERS` | `* @OWNER` (placeholder until real GitHub identity) |
+| `CODEOWNERS` | `* @bhzdcz` (placeholder until real GitHub identity) |
 | `intent/_template.md` | Required sections per spec §7.1 |
 | `intent/2026-09-04-ai-native-sdlc-platform.md` | Seed accepted intent (rev 3 content) for dogfood SoT |
 | `specs/_template.md` | Required sections per spec §7.2 |
@@ -76,7 +76,7 @@ Nothing in this plan implements application product code outside the platform co
 
 ### Change
 
-None (greenfield). After repo exists: replace OWNER/REPO placeholders and CODEOWNERS handle in a follow-up commit.
+None (greenfield). After repo exists: replace bhzdcz/inkrail placeholders and CODEOWNERS handle in a follow-up commit.
 
 ### Delete
 
@@ -91,7 +91,7 @@ None.
 - No multi-harness / plugin runtime.
 - No Grok-Bot-native product code or stage-persona framework in this repo.
 - No auto-merge or parallel default merge policy.
-- Do not invent a real GitHub OWNER/REPO — placeholders until Behzad names them.
+- Do not invent a real GitHub bhzdcz/inkrail — placeholders until Behzad names them.
 - Do not implement a second product after dogfood in this PR.
 
 ## 3. Test plan
@@ -155,7 +155,7 @@ Run T2–T6 via tests/validate-hooks.sh in CI. For later hook bugfixes: failing 
 
 **B. production-gate (PreToolUse, matcher Bash)**
 
-- If command matches promote patterns (from `.claude/hooks/lib/promote-patterns.txt`: scripts/promote.sh, gh release create, npm publish, terraform apply, or SDLC_PROMOTE=1) → require releases/attestations/<id>.yaml with release_manager identity listed in releases/release-managers.txt (Behzad, @OWNER); empty or unknown identities invalid.
+- If command matches promote patterns (from `.claude/hooks/lib/promote-patterns.txt`: scripts/promote.sh, gh release create, npm publish, terraform apply, or SDLC_PROMOTE=1) → require releases/attestations/<id>.yaml with release_manager identity listed in releases/release-managers.txt (Behzad, @bhzdcz); empty or unknown identities invalid.
 - Missing/invalid → deny (prod_gate_blocked).
 - Integrations may no-op; block-without-attestation is required.
 - Document in REVIEW.md / Deploy play: v1 guards a stub promote, not cloud prod (spec concern #3).
@@ -170,7 +170,7 @@ Hook I/O: exit 0; deny via hookSpecificOutput.permissionDecision=deny.
 
 | Risk | Mitigation / rollback |
 | --- | --- |
-| OWNER/REPO unknown | Placeholders; delay real CODEOWNERS/branch protection |
+| bhzdcz/inkrail unknown | Placeholders; delay real CODEOWNERS/branch protection |
 | Hook false positives on docs/templates | Explicit allowlist; expand only via plan update |
 | Hook deny format / exit-code footguns | Shared lib/common.sh + fixtures T2–T6 |
 | Prod gate stub ≠ real prod | Document in Deploy play + REVIEW; v2 for real deploy tools |
@@ -195,7 +195,7 @@ Rollback: revert the bootstrap PR; no prod traffic in v1. Delete attestation fil
 
 ## 7. Implementation checklist (post plan_accepted only)
 
-- [ ] Behzad names OWNER/REPO (or says scaffold local-only with placeholders)
+- [ ] Behzad names bhzdcz/inkrail (or says scaffold local-only with placeholders)
 - [ ] Create empty repo / root
 - [ ] Add files per section 2 in bootstrap PR
 - [ ] Make hook scripts executable; register in .claude/settings.json

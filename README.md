@@ -1,6 +1,6 @@
 # AI-native SDLC platform (dogfood)
 
-Dedicated GitHub repo (`OWNER/REPO` placeholders until named) that **is** the platform: six plays, a committed markdown artifact chain, human judgment gates, Claude Code as the worker, and a Maintain loop that can write the next `intent.md`.
+Dedicated GitHub repo (`bhzdcz/inkrail`) that **is** the platform: six plays, a committed markdown artifact chain, human judgment gates, Claude Code as the worker, and a Maintain loop that can write the next `intent.md`.
 
 This is not a roster of stage-named chat personas. Chat is never the system of record.
 
@@ -25,7 +25,7 @@ intent.md → spec.md → plan.md → diff + tests → REVIEW.md / PR findings �
 
 Templates, skills, hooks (`plan-before-edit`, `production-gate`), `CLAUDE.md` / `REVIEW.md`, `bands.yaml` schema, minimal CI. No live watcher, no cloud deploy automation, no multi-harness runtime.
 
-**Sole acceptor / release manager (v1):** Behzad. Replace `OWNER` / `CODEOWNERS` before shared production use.
+**Sole acceptor / release manager (v1):** Behzad. Confirm `CODEOWNERS` (`@bhzdcz`) before shared production use.
 
 ## Local checks
 
@@ -34,6 +34,6 @@ bash tests/validate-templates.sh
 bash tests/validate-hooks.sh
 ```
 
-## Placeholders
+## Identity
 
-Replace `OWNER` / `REPO` / `@OWNER` when the real GitHub identity exists. Do not invent one in this scaffold.
+GitHub: [`bhzdcz/inkrail`](https://github.com/bhzdcz/inkrail) · code owner / release manager placeholder `@bhzdcz` (Behzad for v1).

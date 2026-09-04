@@ -23,7 +23,7 @@ Use consistently in YAML frontmatter.
 
 ## Placeholders
 
-`OWNER`, `REPO`, `@OWNER` stay literal until Behzad names the real GitHub identity. Do not invent one.
+GitHub identity is `bhzdcz/inkrail`; code owner handle is `@bhzdcz`.
 
 ## Active intent
 

@@ -23,8 +23,8 @@ Repo purpose: **platform contracts + dogfood SoT** for Anthropic’s AI-native S
 1. **PreToolUse matcher `Edit|Write|MultiEdit`** (`plan-before-edit.sh`). Pathless / unresolvable tool input is **denied**. MultiEdit checks every path in `edits[]`.
 2. **No edit** outside the allowlist without `plans/<id>/plan.md` frontmatter `status: accepted`.
 3. **Allowlist:** `intent/_template.md`, `specs/_template.md`, `docs/**`, `findings/**`, `.markdownlint.json`, `.gitignore`, `README.md`. **Not allowlisted:** `releases/attestations/**` (writing attestations requires an accepted plan).
-4. **Findings never approve PRs.** Human code owner required (`CODEOWNERS`: `@OWNER` placeholder; Behzad for v1).
-5. **Agents stop at the production gate.** Promote needs `releases/attestations/*.yaml` whose `release_manager` **exactly matches** a non-comment line in `releases/release-managers.txt` (v1: `Behzad`, `@OWNER`). Mere non-empty values (e.g. forged `Eve`) are denied (`production-gate.sh`).
+4. **Findings never approve PRs.** Human code owner required (`CODEOWNERS`: `@bhzdcz` placeholder; Behzad for v1).
+5. **Agents stop at the production gate.** Promote needs `releases/attestations/*.yaml` whose `release_manager` **exactly matches** a non-comment line in `releases/release-managers.txt` (v1: `Behzad`, `@bhzdcz`). Mere non-empty values (e.g. forged `Eve`) are denied (`production-gate.sh`).
 6. If the diff departs from the plan, update `plan.md` in the same commit/PR.
 
 ## Commands

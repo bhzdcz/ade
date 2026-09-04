@@ -73,7 +73,7 @@ Conductors are an **operator surface**, not a v1 deliverable. Platform contracts
   - `figma_url` — required when the change is UI-facing; otherwise omit/N/A.
   - `github` — PR URL, commit SHA of accepting merge, and back-link from PR body to `intent/` + `spec` paths.
 
-**Open default:** repo owner/name/visibility TBD — templates use placeholders `OWNER/REPO`.
+**Open default:** repo owner/name/visibility TBD — templates use placeholders `bhzdcz/inkrail`.
 
 ## 5. Artifact chain and gate events
 
@@ -292,7 +292,7 @@ Success: a person who missed chat can continue from git alone through a full cha
 
 ## 13. Flagged concerns (analyst escalations)
 
-1. **Repo identity TBD** — templates and CI cannot be fully wired until `OWNER/REPO` exists. Mitigation: placeholders; first Build task after repo creation is rename + protect default branch.
+1. **Repo identity TBD** — templates and CI cannot be fully wired until `bhzdcz/inkrail` exists. Mitigation: placeholders; first Build task after repo creation is rename + protect default branch.
 2. **Sole acceptor / release manager (Behzad)** — bus factor and no separation of PO vs release duties. Acceptable for v1 dogfood; flag before any shared production use.
 3. **Production-gate without real deploy tooling (v1)** — hook may guard a local or documented “promote” action rather than cloud deploy. Risk: false sense of prod safety. Call this out in `REVIEW.md` / play docs until v2 deploy tools exist.
 4. **Conductor ambiguity** — Grok bots may draft artifacts, but platform must not depend on them. Risk of drifting back to chat-as-SoT. Mitigation: acceptance = git merge/PR state only.

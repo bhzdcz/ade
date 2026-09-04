@@ -17,5 +17,5 @@ if ! has_valid_attestation "$ROOT"; then
 fi
 
 echo "promote.sh: attestation OK (stub promote — no cloud side effects)"
-echo "promote.sh: OWNER/REPO placeholders — replace before real releases"
+echo "promote.sh: bhzdcz/inkrail placeholders — replace before real releases"
 exit 0

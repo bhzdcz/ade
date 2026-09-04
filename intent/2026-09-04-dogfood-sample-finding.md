@@ -24,7 +24,7 @@ Draft intent created by Maintain dry-run. Product owner should refine, then acce
 
 ## Affected users and systems
 
-- Platform operators on OWNER/REPO
+- Platform operators on bhzdcz/inkrail
 - Engineers using Claude Code against this dogfood repo
 
 ## Constraints
