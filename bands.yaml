@@ -1,0 +1,36 @@
+# bands.yaml — control band schema + examples (watcher thin / manual in v1)
+#
+# Schema (each band):
+#   id:              string  unique band id
+#   metric:          string  what is measured
+#   threshold:       number|string  breach condition
+#   window:          string  time window (e.g. 15m, 24h, 7d)
+#   severity:        enum    low | medium | high | critical
+#   owner:           string  human owner / on-call role
+#   intent_template: string  path or hint for Maintain → intent draft
+#   description:     string  optional human summary
+#
+# Detection stays deterministic. Live watcher is v2; v1 uses schema + manual findings.
+
+bands:
+  - id: hook-fixture-failures
+    metric: tests/validate-hooks.sh exit_code
+    threshold: "!= 0"
+    window: 24h
+    severity: high
+    owner: Behzad
+    intent_template: intent/_template.md
+    description: >
+      Hook fixture suite failed on main/PR. Open a finding and draft intent
+      if the failure is not a known flake.
+
+  - id: plan-before-edit-false-positive
+    metric: plan-before-edit deny_rate_on_allowlisted_paths
+    threshold: "> 0"
+    window: 7d
+    severity: medium
+    owner: Behzad
+    intent_template: intent/_template.md
+    description: >
+      Allowlisted paths (docs/**, templates, findings/**) were denied by
+      plan-before-edit. Expand allowlist only via plan update.

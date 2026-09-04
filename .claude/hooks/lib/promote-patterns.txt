@@ -1,0 +1,5 @@
+scripts/promote\.sh
+gh[[:space:]]+release[[:space:]]+create
+npm[[:space:]]+publish
+terraform[[:space:]]+apply
+SDLC_PROMOTE=1
