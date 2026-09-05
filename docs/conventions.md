@@ -23,7 +23,7 @@ Use consistently in YAML frontmatter.
 
 ## Placeholders
 
-GitHub identity is `bhzdcz/inkrail`; code owner handle is `@bhzdcz`.
+GitHub identity is `bhzdcz/ade`; code owner handle is `@bhzdcz`.
 
 ## Active intent
 

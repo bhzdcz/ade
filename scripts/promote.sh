@@ -17,5 +17,5 @@ if ! has_valid_attestation "$ROOT"; then
 fi
 
 echo "promote.sh: attestation OK (stub promote — no cloud side effects)"
-echo "promote.sh: bhzdcz/inkrail — stub promote only (no cloud deploy in v1)"
+echo "promote.sh: bhzdcz/ade — stub promote only (no cloud deploy in v1)"
 exit 0

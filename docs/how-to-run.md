@@ -1,10 +1,15 @@
-# How to run Inkrail
+# How to run ADE
 
-Inkrail is not a long-running server. You run it as **git + Claude Code (or this Grok Bot roster) + GitHub PRs**.
+**ADE** is not a long-running server. You run it as **git + Claude Code (or this Grok Bot roster) + GitHub PRs**.
+
+Promotional site stamp: [https://ade.ir](https://ade.ir) (not built in this repo).
 
 ## Prerequisites
 
-1. Clone the repo: `git clone git@github.com:bhzdcz/inkrail.git && cd inkrail`
+1. Clone / remote (honest about pending Settings rename):
+   - **Interim (rename not done yet):** `git clone git@github.com:bhzdcz/inkrail.git && cd inkrail`
+   - **Target identity (after Behzad renames Settings `inkrail` → `ade`):** `git clone git@github.com:bhzdcz/ade.git && cd ade`
+   - **Existing clone after rename:** `git remote set-url origin git@github.com:bhzdcz/ade.git`
 2. Install [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (CLI) for the worker path
 3. Optional: use the Grok Bot stage conductors (Planito → Designito → Develito → Testito → Reviwito → Leadito → Maintito) — they draft/review artifacts; they are not the SoT
 
@@ -35,10 +40,10 @@ bash scripts/promote.sh
 
 Talk to **Planito** for a new idea → bring `intent.md` here for accept → **Designito** for `spec.md` → **Develito** for `plan.md` then code → **Testito** / **Reviwito** → **Leadito** for deploy gates. Artifacts must land in this git repo; chat is not the record.
 
-## What v1 does *not* run yet
-
-Live control-band watcher, eval suite, cloud deploy/MCP, multi-harness. Those are v2.
-
 ## Branch protection (GitHub free private)
 
 GitHub **free private** repos do not get the full branch-protection / required-review feature set that **Pro** (or a public repo) unlocks. This doc does **not** enable protection — it only names the gap. For v1, rely on human discipline: PRs, `CODEOWNERS` (`@bhzdcz`), `scripts/promote.sh` + `releases/release-managers.txt`, and never push straight to `main` without review.
+
+## What v1 does *not* run yet
+
+Live control-band watcher, eval suite, cloud deploy/MCP, multi-harness. Those are v2.
