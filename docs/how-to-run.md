@@ -6,10 +6,8 @@ Promotional site stamp: [https://ade.ir](https://ade.ir) (not built in this repo
 
 ## Prerequisites
 
-1. Clone / remote (honest about pending Settings rename):
-   - **Interim (rename not done yet):** `git clone git@github.com:bhzdcz/inkrail.git && cd inkrail`
-   - **Target identity (after Behzad renames Settings `inkrail` → `ade`):** `git clone git@github.com:bhzdcz/ade.git && cd ade`
-   - **Existing clone after rename:** `git remote set-url origin git@github.com:bhzdcz/ade.git`
+1. Clone the repo: `git clone git@github.com:bhzdcz/ade.git && cd ade`
+   - Existing clone from the old name: `git remote set-url origin git@github.com:bhzdcz/ade.git`
 2. Install [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (CLI) for the worker path
 3. Optional: use the Grok Bot stage conductors (Planito → Designito → Develito → Testito → Reviwito → Leadito → Maintito) — they draft/review artifacts; they are not the SoT
 
