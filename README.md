@@ -4,7 +4,10 @@
 
 Promotional site: [https://ade.ir](https://ade.ir) (stamp only — site build is out of this change).
 
-GitHub: [`bhzdcz/ade`](https://github.com/bhzdcz/ade) (private; renamed from `bhzdcz/inkrail` — update remotes if your clone still points at the old name). The repo **is** the product — six plays, a committed artifact chain, Claude Code as the worker, and a Maintain loop that can write the next `intent.md`.
+**GitHub identity (target):** [`bhzdcz/ade`](https://github.com/bhzdcz/ade).  
+**Status:** GitHub Settings rename from `bhzdcz/inkrail` → `bhzdcz/ade` is **pending** (Behzad). Until that Settings rename lands, the live GitHub repo may still be `bhzdcz/inkrail`; in-repo docs already use the target identity `bhzdcz/ade`.
+
+The repo **is** the product — six plays, a committed artifact chain, Claude Code as the worker, and a Maintain loop that can write the next `intent.md`.
 
 This is not a roster of stage-named chat personas. Chat is never the system of record.
 
@@ -41,9 +44,11 @@ bash tests/validate-hooks.sh
 
 ## Identity
 
-GitHub: [`bhzdcz/ade`](https://github.com/bhzdcz/ade) · code owner `@bhzdcz` · site [ade.ir](https://ade.ir).
+- Product: **ADE** · site [ade.ir](https://ade.ir) · code owner `@bhzdcz`
+- Target GitHub: [`bhzdcz/ade`](https://github.com/bhzdcz/ade) (in-repo / CI identity string)
+- Interim (until Settings rename): repo may still resolve as [`bhzdcz/inkrail`](https://github.com/bhzdcz/inkrail)
 
-After the GitHub Settings rename, update a local clone:
+After Behzad completes Settings rename `inkrail` → `ade`:
 
 ```bash
 git remote set-url origin git@github.com:bhzdcz/ade.git
