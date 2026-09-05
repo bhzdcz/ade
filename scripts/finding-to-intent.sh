@@ -24,14 +24,24 @@ if [[ -z "$SLUG" ]]; then
   SLUG="${SLUG}-finding"
 fi
 
+if [[ ! "$SLUG" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]] || [[ ${#SLUG} -gt 80 ]]; then
+  echo "finding-to-intent: use a lowercase slug with letters, numbers and single hyphens (max 80 characters)" >&2
+  exit 2
+fi
+# Refuse a symlinked output directory before any write.
+if [[ -L "$ROOT/intent" ]]; then
+  echo "finding-to-intent: refusing symlinked intent directory" >&2
+  exit 2
+fi
+mkdir -p "$ROOT/intent"
 DATE="$(date -u +%Y-%m-%d)"
 INTENT_ID="${DATE}-${SLUG}"
 OUT="intent/${INTENT_ID}.md"
 
 # Avoid overwrite
-if [[ -f "$OUT" ]]; then
+if [[ -e "$OUT" || -L "$OUT" ]]; then
   i=2
-  while [[ -f "intent/${INTENT_ID}-${i}.md" ]]; do
+  while [[ -e "intent/${INTENT_ID}-${i}.md" || -L "intent/${INTENT_ID}-${i}.md" ]]; do
     i=$((i + 1))
   done
   INTENT_ID="${INTENT_ID}-${i}"
@@ -50,6 +60,7 @@ PROBLEM="$(awk '
 ' "$FINDING" | sed '/^$/d' | head -n 40)"
 [[ -z "$PROBLEM" ]] && PROBLEM="See source finding: $FINDING"
 
+set -o noclobber
 cat > "$OUT" <<EOFINTENT
 ---
 title: $TITLE_YAML
@@ -77,8 +88,8 @@ Draft intent created by Maintain dry-run. Product owner should refine, then acce
 
 ## Affected users and systems
 
-- Platform operators on bhzdcz/ade
-- Engineers using Claude Code against this dogfood repo
+- Project maintainers
+- Engineers using Claude Code in this repository
 
 ## Constraints
 

@@ -18,7 +18,7 @@ bands:
     threshold: "!= 0"
     window: 24h
     severity: high
-    owner: Behzad
+    owner: project-maintainer
     intent_template: intent/_template.md
     description: >
       Hook fixture suite failed on main/PR. Open a finding and draft intent
@@ -29,7 +29,7 @@ bands:
     threshold: "> 0"
     window: 7d
     severity: medium
-    owner: Behzad
+    owner: project-maintainer
     intent_template: intent/_template.md
     description: >
       Allowlisted paths (docs/**, templates, findings/**) were denied by

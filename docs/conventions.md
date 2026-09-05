@@ -18,12 +18,12 @@ Use consistently in YAML frontmatter.
 | Field | Rule |
 | --- | --- |
 | `jira_key` | Only when a ticket exists; empty string allowed |
-| `figma_url` | Required when UI-facing; else omit/N/A |
+| `figma_url` | Only when a design exists; otherwise omit |
 | `github` | PR URL / accepting commit SHA in PR body back-links |
 
 ## Placeholders
 
-GitHub identity is `bhzdcz/ade`; code owner handle is `@bhzdcz`.
+Toolkit development is at `bhzdcz/ade`. In an installed project, use that project’s actual repository and human owners. The installer never assigns Behzad ownership of a customer repository.
 
 ## Active intent
 

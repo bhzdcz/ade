@@ -1,22 +1,10 @@
 #!/usr/bin/env bash
 # Shared helpers for Claude Code PreToolUse hooks.
-# Contract: always exit 0; communicate via hookSpecificOutput JSON on stdout.
+# Denials use hook JSON. Successful checks abstain and preserve normal permissions.
 
 hook_allow() {
-  local reason="${1:-allowed}"
-  if command -v jq >/dev/null 2>&1; then
-    jq -n --arg reason "$reason" '{
-      hookSpecificOutput: {
-        hookEventName: "PreToolUse",
-        permissionDecision: "allow",
-        permissionDecisionReason: $reason
-      }
-    }'
-  else
-    local escaped
-    escaped=$(printf '%s' "$reason" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read())[1:-1])')
-    printf '%s\n' "{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\",\"permissionDecisionReason\":\"${escaped}\"}}"
-  fi
+  # Abstain: a workflow check must never auto-approve tool permissions.
+  printf '%s\n' '{}'
 }
 
 hook_deny() {
