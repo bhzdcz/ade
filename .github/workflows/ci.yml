@@ -1,24 +1,26 @@
-name: ci
-
+name: Validate ADE
 on:
   push:
   pull_request:
-
+permissions:
+  contents: read
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ['3.10', '3.13']
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
-      - name: Validate templates
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Validate template contracts
         run: bash tests/validate-templates.sh
-
-      - name: Validate hooks
+      - name: Isolated hook regressions
         run: bash tests/validate-hooks.sh
-
-      # Optional markdownlint — non-blocking soft note in v1 comments.
-      # Repo: OWNER/REPO (placeholders until named).
+      - name: Installer and distribution integration
+        run: python3 -m unittest discover -s tests -p 'test_cli.py' -v
+      - name: Tests leave the checkout unchanged
+        run: git diff --exit-code

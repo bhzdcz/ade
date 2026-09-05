@@ -2,22 +2,18 @@
 
 ## Review
 
-- Run three passes per `REVIEW.md` (bugs, security, compliance vs artifacts).
-- Findings never approve; human code owner required.
+Run the three passes in REVIEW.md: correctness, security and scope. Findings inform; human code owners approve. Require successful CI and human review in the Git host.
 
-## Gates
+## Real authorization
 
-- CI: `.github/workflows/ci.yml` runs template + hook validation.
-- Production-gate hook blocks promote patterns unless `releases/attestations/<id>.yaml` has a `release_manager` that **exactly matches** a non-comment line in committed `releases/release-managers.txt` (v1: `Behzad`, `@bhzdcz` placeholder). Any other value (e.g. forged `Eve`) is denied.
-- Agents cannot mint a valid attestation without an accepted plan (`releases/attestations/**` is not on the plan-before-edit allowlist).
-- v1 promote is **`scripts/promote.sh` stub only** — no cloud deploy. Document this to avoid false sense of prod safety (spec concern #3).
+Production credentials belong in protected deployment environments with required reviewers. Bind approvals to the intended change and environment using your deployment platform. Never treat a writable plan status or maintainer name as authenticated approval.
 
-## Release manager
+## Demonstration gate
 
-Behzad for v1 (listed in `releases/release-managers.txt`). Agents act up to the production gate, not past it.
+The bundled Bash hook recognizes a limited set of promote patterns. The `scripts/promote.sh` entry point checks whether a local attestation contains an allowlisted release-manager name, then prints a simulation message. It does not deploy anything. A forged allowlisted name or stale attestation can satisfy that local check; it must never be used as production authorization.
 
-## Rollback (documented only in v1)
+Installed projects start with no release-manager names configured. A human can adapt the simulation after reviewing its limits. ADE hooks cover supported tools only; shell writes and disabled hooks can bypass local conventions.
 
-1. Revert the bootstrap/merge commit or close the promote attestation file.
-2. Delete attestation YAML under `releases/attestations/` to re-block promote.
-3. No prod traffic in v1 dogfood — rollback is git revert.
+## Rollback
+
+Use the application's actual rollback procedure and protected environment. Reverting an ADE configuration change affects workflow files only. Removing a demonstration attestation re-blocks the simulation, not a real deployment.

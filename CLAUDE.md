@@ -1,6 +1,6 @@
 # CLAUDE.md — ADE
 
-Repo purpose: **ADE** — platform contracts + dogfood SoT for Anthropic’s AI-native SDLC. Worker is Claude Code CLI/SDK only. Chat is not SoT; acceptance = git/PR state only.
+Repo purpose: **ADE** — an independent local workflow toolkit for Claude Code, with platform contracts and dogfood artifacts. Not affiliated with Anthropic. Chat is not SoT; acceptance = git/PR state only.
 
 ## Artifact paths
 
@@ -24,7 +24,7 @@ Repo purpose: **ADE** — platform contracts + dogfood SoT for Anthropic’s AI-
 2. **No edit** outside the allowlist without `plans/<id>/plan.md` frontmatter `status: accepted`.
 3. **Allowlist:** `intent/_template.md`, `specs/_template.md`, `docs/**`, `findings/**`, `.markdownlint.json`, `.gitignore`, `README.md`. **Not allowlisted:** `releases/attestations/**` (writing attestations requires an accepted plan).
 4. **Findings never approve PRs.** Human code owner required (`CODEOWNERS`: `@bhzdcz` placeholder; Behzad for v1).
-5. **Agents stop at the production gate.** Promote needs `releases/attestations/*.yaml` whose `release_manager` **exactly matches** a non-comment line in `releases/release-managers.txt` (v1: `Behzad`, `@bhzdcz`). Mere non-empty values (e.g. forged `Eve`) are denied (`production-gate.sh`).
+5. **Agents stop at the production gate.** Promote needs `releases/attestations/*.yaml` whose `release_manager` **exactly matches** a non-comment line in `releases/release-managers.txt` (v1: `Behzad`, `@bhzdcz`). This check is a simulation only: a writable matching name does not authenticate anyone. Real deployment approval belongs in protected environments.
 6. If the diff departs from the plan, update `plan.md` in the same commit/PR.
 
 ## Commands
@@ -41,3 +41,7 @@ bash scripts/promote.sh   # stub; requires allowlisted release_manager attestati
 - Play runbooks: `docs/plays/`
 - Feedback loop: `docs/feedback-loop.md`
 - Conventions: `docs/conventions.md`
+
+## Current implementation
+
+`ade` is the offline Python CLI: init, new, status, doctor, pack. Python 3.10+ and Bash are required. Successful hooks abstain so normal Claude permissions apply. Tests use temporary repositories. Read SECURITY.md for the actual trust boundaries.

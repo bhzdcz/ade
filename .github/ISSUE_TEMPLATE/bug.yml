@@ -1,0 +1,14 @@
+name: Report a reproducible problem
+description: Help improve installation or workflow checks.
+body:
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: What happened, and how can we reproduce it?
+      description: Include the command, expected result, actual result, ADE revision, OS and Python version. Remove secrets and private code.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: What work does this block?
