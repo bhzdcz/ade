@@ -1,7 +1,7 @@
 ---
 intent-id: 2026-09-04-inkrail-v1-finish-redo
 spec: specs/2026-09-04-inkrail-v1-finish-redo/spec.md
-spec-sha: c23fa369f98f86db75fe9dec4028756cd0b05112878b28ce99f2f8307a687dab
+spec-sha: c8c46cd1565ec09cb19fdd4689c98fdc18a76eee42118f872236c50ac4f52e12
 status: accepted
 engineer: Behzad
 author: Develito
