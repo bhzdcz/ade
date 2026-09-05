@@ -107,8 +107,8 @@ if [[ "$band_count" -lt 2 ]]; then
 fi
 
 # Real GitHub identity present (soft check)
-if ! grep -q 'bhzdcz/inkrail' README.md; then
-  echo "FAIL README.md missing bhzdcz/inkrail identity"
+if ! grep -q 'bhzdcz/ade' README.md; then
+  echo "FAIL README.md missing bhzdcz/ade identity"
   fail=1
 fi
 if ! grep -q '@bhzdcz' CODEOWNERS; then

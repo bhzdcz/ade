@@ -1,8 +1,10 @@
-# Inkrail
+# ADE
 
-**Inkrail** is an AI-native SDLC platform: markdown artifacts on rails, humans at the gates.
+**ADE** is an AI-native SDLC platform: markdown artifacts on rails, humans at the gates.
 
-GitHub: [`bhzdcz/inkrail`](https://github.com/bhzdcz/inkrail) (private). The repo **is** the product — six plays, a committed artifact chain, Claude Code as the worker, and a Maintain loop that can write the next `intent.md`.
+Promotional site: [https://ade.ir](https://ade.ir) (stamp only — site build is out of this change).
+
+GitHub: [`bhzdcz/ade`](https://github.com/bhzdcz/ade) (private; renamed from `bhzdcz/inkrail` — update remotes if your clone still points at the old name). The repo **is** the product — six plays, a committed artifact chain, Claude Code as the worker, and a Maintain loop that can write the next `intent.md`.
 
 This is not a roster of stage-named chat personas. Chat is never the system of record.
 
@@ -16,7 +18,7 @@ This is not a roster of stage-named chat personas. Chat is never the system of r
 | [docs/plays/](docs/plays/) | Plan → Design → Build → Test → Deploy → Maintain runbooks |
 | [docs/feedback-loop.md](docs/feedback-loop.md) | Findings / incidents → intent / evals |
 | [docs/conventions.md](docs/conventions.md) | intent-id, status vocabulary, linkage |
-| [docs/how-to-run.md](docs/how-to-run.md) | How to run Inkrail day to day |
+| [docs/how-to-run.md](docs/how-to-run.md) | How to run ADE day to day |
 
 ## Artifact chain
 
@@ -39,7 +41,13 @@ bash tests/validate-hooks.sh
 
 ## Identity
 
-GitHub: [`bhzdcz/inkrail`](https://github.com/bhzdcz/inkrail) · code owner `@bhzdcz`.
+GitHub: [`bhzdcz/ade`](https://github.com/bhzdcz/ade) · code owner `@bhzdcz` · site [ade.ir](https://ade.ir).
+
+After the GitHub Settings rename, update a local clone:
+
+```bash
+git remote set-url origin git@github.com:bhzdcz/ade.git
+```
 
 ## Branch protection note (v1)
 
