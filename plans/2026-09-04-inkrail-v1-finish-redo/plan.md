@@ -124,7 +124,7 @@ Develito pre-Testito self-check: run T1/T2/T7 locally on the Phase B branch and 
 
 1. Commit author string for Develito Build: **resolved** — `Behzad <behzad@local>` (engineer choice at plan accept). Testito criterion remains “not Leadito.”
 2. Phase A is pure `git revert -m 1 46c75ed` with no extra file edits.
-3. Redo intent/spec bodies are seeded in Phase B from accepted Planito/Designito text (spec content hash `c23fa369…` attachment / `/workspace/sdlc-platform/specs/inkrail-v1-relend/spec.md`).
+3. Redo intent/spec bodies are seeded in Phase B from accepted Planito/Designito text (spec content hash `c8c46cd1565ec09cb19fdd4689c98fdc18a76eee42118f872236c50ac4f52e12` attachment / `/workspace/sdlc-platform/specs/inkrail-v1-relend/spec.md`).
 4. Two PRs sequential; no stack unless Behzad overrides at plan accept.
 5. Do not revert `56b5756` identity commit in this change.
 6. Private repo `bhzdcz/inkrail` remains SoT; Cursor cloud agent / `gh` used for PRs after `plan_accepted`.
