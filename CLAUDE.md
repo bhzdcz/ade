@@ -1,6 +1,6 @@
-# CLAUDE.md — Inkrail
+# CLAUDE.md — AI-native SDLC platform
 
-Repo purpose: **Inkrail** — platform contracts + dogfood SoT for Anthropic’s AI-native SDLC. Worker is Claude Code CLI/SDK only. Chat is not SoT; acceptance = git/PR state only.
+Repo purpose: **platform contracts + dogfood SoT** for Anthropic’s AI-native SDLC. Worker is Claude Code CLI/SDK only. Chat is not SoT; acceptance = git/PR state only.
 
 ## Artifact paths
 
