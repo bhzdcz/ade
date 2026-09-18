@@ -78,7 +78,7 @@ Draft intent created by Maintain dry-run. Product owner should refine, then acce
 ## Affected users and systems
 
 - Platform operators on bhzdcz/ade
-- Engineers using Claude Code against this dogfood repo
+- Engineers using Claude Code against this ADE kit repo
 
 ## Constraints
 

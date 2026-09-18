@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Stub promote entrypoint for v1 dogfood.
+# Stub promote entrypoint for ADE v1.
 # Does not deploy to cloud. Requires a valid attestation (enforced by production-gate hook
 # when invoked via Claude Code Bash; this script also self-checks).
 
