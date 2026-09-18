@@ -1,47 +1,76 @@
 # How to run ADE
 
-**ADE** is not a long-running server. You run it as **git + Claude Code (or this Grok Bot roster) + GitHub PRs**.
+**ADE** is not a long-running server. You run it as **git + Claude Code + GitHub PRs**. Grok Bot stage conductors are optional; strangers do not need them.
 
-Promotional site stamp: [https://ade.ir](https://ade.ir) (not built in this repo).
+Product site: [https://ade.ir](https://ade.ir)
 
 ## Prerequisites
 
-1. Clone the repo: `git clone git@github.com:bhzdcz/ade.git && cd ade`
-   - Existing clone from the old name: `git remote set-url origin git@github.com:bhzdcz/ade.git`
-2. Install [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (CLI) for the worker path
-3. Optional: use the Grok Bot stage conductors (Planito → Designito → Develito → Testito → Reviwito → Leadito → Maintito) — they draft/review artifacts; they are not the SoT
+1. git
+2. [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI (worker path)
+3. A GitHub account (for PRs)
+
+## Clone
+
+HTTPS (preferred for strangers):
+
+```bash
+git clone https://github.com/bhzdcz/ade.git
+cd ade
+```
+
+SSH (alternate):
+
+```bash
+git clone git@github.com:bhzdcz/ade.git
+cd ade
+```
 
 ## Happy path (one change)
 
-1. **Plan** — Describe the problem in your own words. Produce `intent/<YYYY-MM-DD-slug>.md` from `intent/_template.md` (or ask Planito). You (PO) accept → commit/merge the intent.
-2. **Design** — From the accepted intent, produce `specs/<intent-id>/spec.md` (or Designito). You sign off.
-3. **Build** — Start Claude Code in the repo. Set `.claude/active-intent` to the intent-id. Work in **plan mode** first: write `plans/<intent-id>/plan.md`, set `status: accepted` only after you accept it. Then implement. Hooks block non-allowlisted edits without an accepted plan.
-4. **Test** — Before you call it done: `bash tests/validate-templates.sh` and `bash tests/validate-hooks.sh` (plus any change-specific tests). Paste the output in the PR.
-5. **Review / Deploy** — Open a PR. Reviwito (or Claude) runs `REVIEW.md` three passes. Findings never approve. You (`@bhzdcz`) approve and merge. Production promote stays stubbed: `scripts/promote.sh` only succeeds with a valid attestation under `releases/attestations/` whose `release_manager` is listed in `releases/release-managers.txt`.
-6. **Maintain** — For a finding too big for one PR: `bash scripts/finding-to-intent.sh findings/examples/dogfood-sample.md` (or your own finding) → new `intent.md`, back to Plan.
+Stage names below are roles, not required bots. You can do every step yourself with Claude Code + git.
+
+1. **Plan** — Describe the problem. Copy `intent/_template.md` → `intent/<YYYY-MM-DD-slug>.md`. PO accepts → commit/merge the intent (`status: accepted`).
+2. **Design** — From the accepted intent, write `specs/<intent-id>/spec.md` from `specs/_template.md`. PO signs off.
+3. **Build** — Start Claude Code in the repo. Set `.claude/active-intent` to the intent-id. Write `plans/<intent-id>/plan.md` from `plans/_template.md` (plan mode first). Set `status: accepted` only after you accept it. Then implement. Hooks block non-allowlisted edits without an accepted plan.
+4. **Test** — Run validators (and any change-specific tests). Paste output in the PR:
+
+   ```bash
+   bash tests/validate-templates.sh
+   bash tests/validate-hooks.sh
+   ```
+
+5. **Review / Deploy** — Open a PR. Run three passes per `REVIEW.md`. Findings never approve. Human code owner (`@bhzdcz`) approves and merges. Production promote stays stubbed: `scripts/promote.sh` only succeeds with a valid attestation under `releases/attestations/` whose `release_manager` is listed in `releases/release-managers.txt`.
+6. **Maintain** — For a finding too big for one PR: `bash scripts/finding-to-intent.sh findings/examples/dogfood-sample.md` (or your own finding) → new `intent.md`, back to Plan. **Leadito** (if you use conductors) owns the Deploy + Maintain gate; Leadito does not Build.
+
+Walk the fictional example: [examples/widgetco-status-digest/](../examples/widgetco-status-digest/).
 
 ## Useful commands
 
 ```bash
-# Validation (v1 CI mirrors these)
 bash tests/validate-templates.sh
 bash tests/validate-hooks.sh
-
-# Maintain dry-run → draft intent
 bash scripts/finding-to-intent.sh findings/examples/dogfood-sample.md
-
-# Stub promote (blocked without allowlisted attestation)
-bash scripts/promote.sh
+bash scripts/promote.sh   # stub; needs allowlisted release_manager attestation
 ```
 
-## With Grok Bot conductors
+## Appendix: optional Grok Bot conductors
 
-Talk to **Planito** for a new idea → bring `intent.md` here for accept → **Designito** for `spec.md` → **Develito** for `plan.md` then code → **Testito** / **Reviwito** → **Leadito** for deploy gates. Artifacts must land in this git repo; chat is not the record.
+If you use Grok Bot stage conductors, a typical handoff is:
 
-## Branch protection (GitHub free private)
+**Planito → Designito → Develito → Testito → Reviwito → Leadito**
 
-GitHub **free private** repos do not get the full branch-protection / required-review feature set that **Pro** (or a public repo) unlocks. This doc does **not** enable protection — it only names the gap. For v1, rely on human discipline: PRs, `CODEOWNERS` (`@bhzdcz`), `scripts/promote.sh` + `releases/release-managers.txt`, and never push straight to `main` without review.
+- Conductors draft and review artifacts; they are **not** the SoT.
+- Artifacts must land in this git repo; chat is not the record.
+- **Leadito** = Deploy + Maintain gate / loop conduct. Leadito does **not** Build.
+- Maintain is under Leadito (not a separate conductor role).
+
+Strangers succeed with Claude Code + git alone; skip this appendix if unused.
+
+## Branch protection (public free)
+
+On a **public** GitHub repo, free accounts can enable branch protection / required reviews (Settings → Branches / Rulesets). Enabling that is a human Settings step for the owner (`@bhzdcz`). This doc does not flip Settings. Until protection is on, rely on PRs, `CODEOWNERS`, `scripts/promote.sh` + `releases/release-managers.txt`, and never push straight to `main` without review.
 
 ## What v1 does *not* run yet
 
-Live control-band watcher, eval suite, cloud deploy/MCP, multi-harness. Those are v2.
+Live control-band watcher, eval suite, cloud deploy/MCP, multi-harness, paid installs/SaaS. Those are out of v1.

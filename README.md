@@ -1,24 +1,38 @@
 # ADE
 
-**ADE** is an AI-native SDLC platform: markdown artifacts on rails, humans at the gates.
+**ADE** is an AI-native SDLC kit: markdown artifacts on rails, humans at the gates.
 
-Promotional site: [https://ade.ir](https://ade.ir) (stamp only — site build is out of this change).
+You clone it, follow the plays, and keep intent → spec → plan → review → deploy → maintain in git. Chat is never the system of record.
 
-GitHub: [`bhzdcz/ade`](https://github.com/bhzdcz/ade) (private; renamed from `bhzdcz/inkrail`). The repo **is** the product — six plays, a committed artifact chain, Claude Code as the worker, and a Maintain loop that can write the next `intent.md`.
+Product site: [https://ade.ir](https://ade.ir) · GitHub: [`bhzdcz/ade`](https://github.com/bhzdcz/ade) · License: [Apache-2.0](LICENSE)
 
-This is not a roster of stage-named chat personas. Chat is never the system of record.
+## What it is
 
-## Quick links
+- A public open-source playbook and template kit for AI-assisted software delivery
+- Six stage plays (Plan → Design → Build → Test → Deploy → Maintain)
+- Claude Code hooks that gate edits behind an accepted `plan.md`
+- One fictional worked example so strangers can walk the rail end-to-end
 
-| Path | Role |
-| --- | --- |
-| [CLAUDE.md](CLAUDE.md) | One-page operating context for Claude Code |
-| [REVIEW.md](REVIEW.md) | Three-pass PR review policy |
-| [bands.yaml](bands.yaml) | Control-band schema + examples |
-| [docs/plays/](docs/plays/) | Plan → Design → Build → Test → Deploy → Maintain runbooks |
-| [docs/feedback-loop.md](docs/feedback-loop.md) | Findings / incidents → intent / evals |
-| [docs/conventions.md](docs/conventions.md) | intent-id, status vocabulary, linkage |
-| [docs/how-to-run.md](docs/how-to-run.md) | How to run ADE day to day |
+## What it is not
+
+- Not an agent IDE or in-browser console
+- Not a hosted SaaS, paid install, or checkout product
+- Not a roster of chat personas as the source of truth — optional conductors may draft artifacts; humans accept in git/PRs
+
+## Quickstart
+
+```bash
+git clone https://github.com/bhzdcz/ade.git
+cd ade
+bash tests/validate-templates.sh
+bash tests/validate-hooks.sh
+```
+
+Then read **[docs/how-to-run.md](docs/how-to-run.md)** for the happy path.
+
+Kit map (templates, skills, hooks, plays): **[docs/kit-map.md](docs/kit-map.md)**
+
+Worked example: **[examples/widgetco-status-digest/](examples/widgetco-status-digest/)**
 
 ## Artifact chain
 
@@ -26,11 +40,16 @@ This is not a roster of stage-named chat personas. Chat is never the system of r
 intent.md → spec.md → plan.md → diff + tests → REVIEW.md / PR findings → deploy gates → Maintain → new intent.md
 ```
 
-## v1 scope
+## v1 scope (honest)
 
-Templates, skills, hooks (`plan-before-edit`, `production-gate`), `CLAUDE.md` / `REVIEW.md`, `bands.yaml` schema, minimal CI. No live watcher, no cloud deploy automation, no multi-harness runtime.
+| In v1 | Not in v1 |
+| --- | --- |
+| Templates, plays, `CLAUDE.md` / `REVIEW.md` | Live control-band watcher |
+| Hooks: `plan-before-edit`, `production-gate` | Cloud deploy automation / SaaS |
+| Validators + minimal CI | Multi-harness runtime |
+| Fictional WidgetCo worked example | Paid packs, Sponsors CTAs, checkout |
 
-**Sole acceptor / release manager (v1):** Behzad (`@bhzdcz`).
+**Code owner / release manager (v1):** Behzad (`@bhzdcz`).
 
 ## Local checks
 
@@ -41,14 +60,12 @@ bash tests/validate-hooks.sh
 
 ## Identity
 
-GitHub: [`bhzdcz/ade`](https://github.com/bhzdcz/ade) · code owner `@bhzdcz` · site [ade.ir](https://ade.ir).
+GitHub: [`bhzdcz/ade`](https://github.com/bhzdcz/ade) · site [ade.ir](https://ade.ir) · historically renamed from `bhzdcz/inkrail`.
 
-If a local clone still points at the old remote name:
+## Branch protection
 
-```bash
-git remote set-url origin git@github.com:bhzdcz/ade.git
-```
+Once the repo is **public**, GitHub free accounts can enable branch protection / required reviews on `main` (Settings → Branches). Until then (or if protection is off), treat `CODEOWNERS` + PR review as process gates: do not push straight to `main` without a PR and human approval.
 
-## Branch protection note (v1)
+## License
 
-GitHub branch protection / rulesets on **private** repos require GitHub Pro (or a public repo). Until then, treat `CODEOWNERS` + PR review as process gates: do not push straight to `main` without a PR and human approval.
+Licensed under the [Apache License 2.0](LICENSE).

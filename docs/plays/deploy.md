@@ -20,4 +20,4 @@ Behzad for v1 (listed in `releases/release-managers.txt`). Agents act up to the 
 
 1. Revert the bootstrap/merge commit or close the promote attestation file.
 2. Delete attestation YAML under `releases/attestations/` to re-block promote.
-3. No prod traffic in v1 dogfood — rollback is git revert.
+3. No production traffic assumed in v1 — rollback is git revert.

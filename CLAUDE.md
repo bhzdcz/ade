@@ -1,6 +1,8 @@
 # CLAUDE.md — ADE
 
-Repo purpose: **ADE** — platform contracts + dogfood SoT for Anthropic’s AI-native SDLC. Worker is Claude Code CLI/SDK only. Chat is not SoT; acceptance = git/PR state only.
+Repo purpose: **ADE** — public open-source AI-native SDLC kit (markdown artifacts on rails, humans at the gates). Worker is Claude Code CLI/SDK. Chat is not SoT; acceptance = git/PR state only.
+
+Optional Grok Bot conductors may draft/review artifacts; they are not required. Roster is optional. **Leadito** owns Deploy + Maintain gate / loop conduct and does **not** Build. Maintain is not a separate conductor role.
 
 ## Artifact paths
 
@@ -15,6 +17,7 @@ Repo purpose: **ADE** — platform contracts + dogfood SoT for Anthropic’s AI-
 | Review / bands | `REVIEW.md`, `bands.yaml` |
 | Release managers | `releases/release-managers.txt` |
 | Attestations | `releases/attestations/*.yaml` (write requires accepted plan) |
+| Kit map | `docs/kit-map.md` |
 
 **Before any product/framework edit:** read intent → spec → plan for `.claude/active-intent`.
 
@@ -38,6 +41,8 @@ bash scripts/promote.sh   # stub; requires allowlisted release_manager attestati
 
 ## Further reading
 
+- How to run: `docs/how-to-run.md`
+- Kit map: `docs/kit-map.md`
 - Play runbooks: `docs/plays/`
 - Feedback loop: `docs/feedback-loop.md`
 - Conventions: `docs/conventions.md`
