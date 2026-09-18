@@ -43,9 +43,9 @@ echo "== validate-templates =="
 need_file intent/_template.md
 need_file specs/_template.md
 need_file findings/_template.md
-need_file intent/2026-09-04-ai-native-sdlc-platform.md
-need_file specs/2026-09-04-ai-native-sdlc-platform/spec.md
-need_file plans/2026-09-04-ai-native-sdlc-platform/plan.md
+need_file intent/2026-09-18-ade-public-oss.md
+need_file specs/2026-09-18-ade-public-oss/spec.md
+need_file plans/2026-09-18-ade-public-oss/plan.md
 need_file CLAUDE.md
 need_file REVIEW.md
 need_file bands.yaml
@@ -77,24 +77,24 @@ done
 
 # Seeded intent
 for key in title author status date revision acceptor source; do
-  need_fm_key intent/2026-09-04-ai-native-sdlc-platform.md "$key"
+  need_fm_key intent/2026-09-18-ade-public-oss.md "$key"
 done
-if ! grep -q 'status: accepted' intent/2026-09-04-ai-native-sdlc-platform.md; then
+if ! grep -q 'status: accepted' intent/2026-09-18-ade-public-oss.md; then
   echo "FAIL seeded intent status not accepted"
   fail=1
 fi
 
 # Seeded plan
 for key in intent-id spec status engineer date; do
-  need_fm_key plans/2026-09-04-ai-native-sdlc-platform/plan.md "$key"
+  need_fm_key plans/2026-09-18-ade-public-oss/plan.md "$key"
 done
-if ! grep -q 'status: accepted' plans/2026-09-04-ai-native-sdlc-platform/plan.md; then
+if ! grep -q 'status: accepted' plans/2026-09-18-ade-public-oss/plan.md; then
   echo "FAIL seeded plan status not accepted"
   fail=1
 fi
 
 # Seeded spec status
-if ! grep -qE 'status:[[:space:]]*accepted' specs/2026-09-04-ai-native-sdlc-platform/spec.md; then
+if ! grep -qE 'status:[[:space:]]*accepted' specs/2026-09-18-ade-public-oss/spec.md; then
   echo "FAIL seeded spec status not accepted"
   fail=1
 fi

@@ -3,7 +3,7 @@
 ## v1 path
 
 1. Detection stays deterministic (`bands.yaml` schema; watcher thin/manual).
-2. Open a finding (`findings/_template.md`) or use `findings/examples/dogfood-sample.md`.
+2. Open a finding from `findings/_template.md` (copy to `findings/<slug>.md`).
 3. Draft intent: `bash scripts/finding-to-intent.sh <finding.md>`.
 4. PO accepts intent → normal Plan → Design → Build chain. Do not bypass Deploy for code changes.
 5. Prefer PR for fixes; pre-approved runbooks only where explicitly listed.

@@ -52,7 +52,7 @@ expect_decision "T4 allowlist docs" "$PLAN_HOOK" "$FIX/allowlist-docs-write.json
 expect_decision "T4 allowlist readme" "$PLAN_HOOK" "$FIX/allowlist-readme-write.json" allow
 
 # T3 accepted plan allow — ensure active-intent + accepted plan
-printf '%s\n' '2026-09-04-ai-native-sdlc-platform' > "$ROOT/.claude/active-intent"
+printf '%s\n' '2026-09-18-ade-public-oss' > "$ROOT/.claude/active-intent"
 expect_decision "T3 accepted plan CLAUDE.md" "$PLAN_HOOK" "$FIX/accepted-plan-claude-write.json" allow
 
 # MultiEdit with accepted plan → allow
@@ -76,7 +76,7 @@ cp "$ACTIVE_BAK" "$ROOT/.claude/active-intent"
 rm -f "$ACTIVE_BAK"
 
 # Also deny when plan status is not accepted (temp rewrite)
-PLAN="$ROOT/plans/2026-09-04-ai-native-sdlc-platform/plan.md"
+PLAN="$ROOT/plans/2026-09-18-ade-public-oss/plan.md"
 PLAN_BAK="$(mktemp)"
 cp "$PLAN" "$PLAN_BAK"
 # flip status to draft temporarily
@@ -87,7 +87,7 @@ cp "$PLAN_BAK" "$PLAN"
 rm -f "$PLAN_BAK"
 
 # Restore active intent + accepted status sanity
-printf '%s\n' '2026-09-04-ai-native-sdlc-platform' > "$ROOT/.claude/active-intent"
+printf '%s\n' '2026-09-18-ade-public-oss' > "$ROOT/.claude/active-intent"
 if ! grep -q '^status: accepted' "$PLAN"; then
   echo "FAIL plan status not restored to accepted"
   fail=1

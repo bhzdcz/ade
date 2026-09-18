@@ -41,7 +41,7 @@ Stage names below are roles, not required bots. You can do every step yourself w
    ```
 
 5. **Review / Deploy** — Open a PR. Run three passes per `REVIEW.md`. Findings never approve. Human code owner (`@bhzdcz`) approves and merges. Production promote stays stubbed: `scripts/promote.sh` only succeeds with a valid attestation under `releases/attestations/` whose `release_manager` is listed in `releases/release-managers.txt`.
-6. **Maintain** — For a finding too big for one PR: `bash scripts/finding-to-intent.sh findings/examples/dogfood-sample.md` (or your own finding) → new `intent.md`, back to Plan. **Leadito** (if you use conductors) owns the Deploy + Maintain gate; Leadito does not Build.
+6. **Maintain** — For a finding too big for one PR: `bash scripts/finding-to-intent.sh findings/_template.md` (copy to `findings/<slug>.md` first, or pass your own finding) → new `intent.md`, back to Plan. **Leadito** (if you use conductors) owns the Deploy + Maintain gate; Leadito does not Build.
 
 Walk the fictional example: [examples/widgetco-status-digest/](../examples/widgetco-status-digest/).
 
@@ -50,7 +50,7 @@ Walk the fictional example: [examples/widgetco-status-digest/](../examples/widge
 ```bash
 bash tests/validate-templates.sh
 bash tests/validate-hooks.sh
-bash scripts/finding-to-intent.sh findings/examples/dogfood-sample.md
+bash scripts/finding-to-intent.sh findings/_template.md
 bash scripts/promote.sh   # stub; needs allowlisted release_manager attestation
 ```
 

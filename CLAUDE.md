@@ -35,7 +35,7 @@ Optional Grok Bot conductors may draft/review artifacts; they are not required. 
 ```bash
 bash tests/validate-templates.sh
 bash tests/validate-hooks.sh
-bash scripts/finding-to-intent.sh findings/examples/dogfood-sample.md
+bash scripts/finding-to-intent.sh findings/_template.md
 bash scripts/promote.sh   # stub; requires allowlisted release_manager attestation
 ```
 
