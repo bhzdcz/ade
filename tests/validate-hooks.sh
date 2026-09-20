@@ -128,6 +128,48 @@ done
 shopt -u nullglob
 rmdir "$ATT_STASH" 2>/dev/null || true
 
+# Optional Jev Noul gate: always registered; OFF → fast allow (no network/key)
+JEV_HOOK="$ROOT/.claude/hooks/jev-noul-gate.sh"
+chmod +x "$JEV_HOOK" "$ROOT/scripts/jev-noul-check.sh"
+unset ADE_JEV_GATE ADE_JEV_API_KEY ADE_JEV_STUB ADE_JEV_STUB_P || true
+expect_decision "jev gate OFF allow" "$JEV_HOOK" "$FIX/jev-edit-allow.json" allow
+
+set +e
+_jev_out="$(CLAUDE_PROJECT_DIR="$ROOT" ADE_JEV_GATE=1 ADE_JEV_STUB=1 ADE_JEV_STUB_P=0.9 bash "$JEV_HOOK" < "$FIX/jev-edit-allow.json" 2>/dev/null)"
+_jev_rc=$?
+set -e
+if [[ "$_jev_rc" -ne 0 ]]; then
+  echo "FAIL jev stub allow: hook exited $_jev_rc"
+  fail=1
+else
+  _got="$(decision_of "$_jev_out")"
+  if [[ "$_got" != "allow" ]]; then
+    echo "FAIL jev stub allow: expected allow got '''$_got'''"
+    echo "  stdout: $_jev_out"
+    fail=1
+  else
+    echo "PASS jev stub allow (allow)"
+  fi
+fi
+
+set +e
+_jev_out="$(CLAUDE_PROJECT_DIR="$ROOT" ADE_JEV_GATE=1 ADE_JEV_STUB=1 ADE_JEV_STUB_P=0.2 bash "$JEV_HOOK" < "$FIX/jev-edit-deny.json" 2>/dev/null)"
+_jev_rc=$?
+set -e
+if [[ "$_jev_rc" -ne 0 ]]; then
+  echo "FAIL jev stub deny: hook exited $_jev_rc"
+  fail=1
+else
+  _got="$(decision_of "$_jev_out")"
+  if [[ "$_got" != "deny" ]]; then
+    echo "FAIL jev stub deny: expected deny got '''$_got'''"
+    echo "  stdout: $_jev_out"
+    fail=1
+  else
+    echo "PASS jev stub deny (deny)"
+  fi
+fi
+
 if [[ "$fail" -ne 0 ]]; then
   echo "validate-hooks: FAILED"
   exit 1

@@ -7,6 +7,10 @@
           {
             "type": "command",
             "command": ".claude/hooks/plan-before-edit.sh"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/jev-noul-gate.sh"
           }
         ]
       },
